@@ -16,3 +16,6 @@ html:lang(ru) h2{font-size:clamp(28px,3vw,43px);line-height:1.45}
 html:lang(ru) .panel-text h3{font-size:27px}
 @media(max-width:760px){html[data-script=latin] .hero h1{font-size:clamp(47px,9.4vw,70px);max-width:590px}html[data-script=latin] h2{font-size:40px}html:lang(ru) .hero h1{font-size:clamp(29px,6.4vw,45px);line-height:1.4}html:lang(ru) h2{font-size:28px;line-height:1.45}html:lang(ru) .world-copy h2{font-size:28px}html:lang(ru) .panel-text h3{font-size:22px}}
 @media(max-width:370px){html[data-script=latin] .hero h1{font-size:43px}html:lang(ru) .hero h1{font-size:27px}html[data-script=latin] .hero-actions{align-items:flex-start}.hero-actions .button{flex-shrink:0}.coming{padding-top:10px}html[data-script=latin] h2{font-size:35px}html:lang(ru) h2{font-size:24px}}
+
+/* Long translated policy titles must wrap even on the smallest phones. */
+.legal h1{overflow-wrap:anywhere;hyphens:auto}.footer-links{flex-wrap:wrap}
