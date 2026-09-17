@@ -4,7 +4,7 @@ The independent, public marketing website for Sunimori's Kintsugi game. Producti
 
 ## Website languages
 
-Japanese, English, Korean, Simplified Chinese, Traditional Chinese, Spanish, French, German, Italian, Brazilian Portuguese and Russian — the same 11-language set as Countdrop's app resources. The website language list does not imply that all these languages are supported in the game. The support page separately describes the current five-language game build.
+Japanese, English, Korean, Simplified Chinese, Traditional Chinese, Spanish, French, German, Italian, Brazilian Portuguese and Russian — the same 11-language set as Countdrop's app resources. The game ships in the same 11 languages, and the support page lists them.
 
 ## Edit and preview
 
@@ -34,7 +34,11 @@ GitHub Pages custom domain: `playkintsugi.com`. DNS stays at Squarespace: apex A
 
 ## Release checklist
 
-When the app is actually available, verify its public App Store URL, update the release wording in all 11 languages, then add the download link. Update the support information and released-app privacy policy to match the production build, including any enabled rewarded advertising. Update the Kintsugi card in `sunimori/sunimori-site` at the same time. No download button should be added for an unlisted app.
+When the app is actually available, verify its public App Store URL, update the release wording in all 11 languages, then add the download link. Update the Kintsugi card in `sunimori/sunimori-site` at the same time. No download button should be added for an unlisted app.
+
+The privacy policy describes the production build as submitted (2026-09-17): local-only game data, Game Center, and player-initiated rewarded ads from Google AdMob with Google's consent message, all-ages ad content and in-app ad reporting. Revise it in all 11 languages whenever the app's data practices change.
+
+`dist/app-ads.txt` authorises Google AdMob to sell the app's ad space. AdMob reads it from the domain in the App Store Marketing URL, so that URL must stay `https://playkintsugi.com/`. The publisher line lives in `content.py` (`APP_ADS`) and `check.py` verifies the built file.
 
 ## Assets and rights
 

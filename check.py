@@ -3,7 +3,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import re
-from content import COPY, LANGUAGES
+from content import COPY, LANGUAGES, APP_ADS
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT/'dist'
@@ -53,5 +53,6 @@ for file in ROOT.rglob('*'):
     text=file.read_text()
     if any(re.search(p,text) for p in patterns): issues.append(f'Credential pattern found: {file}')
 assert (DIST/'CNAME').read_text().strip()=='playkintsugi.com'
+assert (DIST/'app-ads.txt').read_text()==APP_ADS, 'app-ads.txt must match the AdMob publisher line'
 assert not issues, '\n'.join(issues)
 print(f'Passed: {len(pages)} pages, 11 complete languages, local links, assets, prelaunch state and public-file scan.')

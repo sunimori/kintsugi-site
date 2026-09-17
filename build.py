@@ -2,7 +2,7 @@
 from pathlib import Path
 from html import escape
 import json
-from content import COPY, LANGUAGES
+from content import COPY, LANGUAGES, APP_ADS
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
@@ -34,14 +34,21 @@ world = f'''<section id="world" class="world"><div class="wrap world-inner"><fig
 release = f'''<section id="release" class="release wrap"><img class="app-icon" src="/assets/icon.webp" width="512" height="512" loading="lazy" alt="金継 KINTSUGI"><p class="eyebrow">{t('release_label')}</p>{t('release_title','h2')}{t('release_body','p','release-body')}<p class="release-status"><i aria-hidden="true"></i>{t('status')}</p><a class="text-link" href="https://sunimori.com/" target="_blank" rel="noopener noreferrer">{t('studio')} {arrow}</a></section>'''
 page('/', hero+intro+play+world+release, home=True)
 back = f'<a class="back" href="/">← {t("back")}</a>'
-support = f'''<section class="legal wrap">{back}<p class="eyebrow">KINTSUGI / SUPPORT</p>{t('support_title','h1')}{t('support_intro','p','lead')}<div class="faq">{''.join(f'<details><summary>{t(key)}</summary>{t(body,"p")}</details>' for key,body in [('faq_release','release_body'),('faq_device','faq_device_body'),('faq_lang','faq_lang_body')])}</div>{t('contact_title','h2')}{t('contact_body','p')}<a class="contact-email" href="mailto:support@sunimori.com?subject=Kintsugi%20Support">support@sunimori.com {arrow}</a></section>'''
+support = f'''<section class="legal wrap">{back}<p class="eyebrow">KINTSUGI / SUPPORT</p>{t('support_title','h1')}{t('support_intro','p','lead')}<div class="faq">{''.join(f'<details><summary>{t(key)}</summary>{t(body,"p")}</details>' for key,body in [('faq_release','release_body'),('faq_device','faq_device_body'),('faq_lang','faq_lang_body')])}</div>{t('contact_title','h2')}{t('contact_body','p')}<a class="contact-email" href="mailto:support@sunimori.com?subject=Kintsugi%20Support">support@sunimori.com</a></section>'''
 page('/support/', support, 'support')
-privacy = f'''<section class="legal wrap">{back}<p class="eyebrow">KINTSUGI / PRIVACY</p>{t('privacy_title','h1')}{t('updated','p','updated')}{t('privacy_intro','p','lead')}{''.join(t(k,'h2')+t(k+'_body','p') for k in ['p_site','p_game','p_email'])}<p><a class="text-link" href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">{t('github_privacy')} {arrow}</a></p><a class="contact-email" href="mailto:support@sunimori.com?subject=Kintsugi%20Privacy">support@sunimori.com {arrow}</a></section>'''
+policies = [('google_privacy', 'https://policies.google.com/technologies/partner-sites'),
+            ('apple_privacy', 'https://www.apple.com/legal/privacy/'),
+            ('github_privacy', 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement')]
+policy_links = ''.join(f'<p><a class="text-link" href="{href}" target="_blank" rel="noopener noreferrer">{t(key)} {arrow}</a></p>' for key, href in policies)
+privacy = f'''<section class="legal wrap">{back}<p class="eyebrow">KINTSUGI / PRIVACY</p>{t('privacy_title','h1')}{t('updated','p','updated')}{t('privacy_intro','p','lead')}{''.join(t(k,'h2')+t(k+'_body','p') for k in ['p_game','p_ads','p_rights','p_email','p_site'])}{policy_links}<a class="contact-email" href="mailto:support@sunimori.com?subject=Kintsugi%20Privacy">support@sunimori.com</a></section>'''
 page('/privacy/', privacy, 'privacy')
 page('/404.html', f'<section class="legal wrap"><p class="eyebrow">404</p>{t("not_found","h1")}{back}</section>')
 (DIST/'locales.js').write_text('window.KINTSUGI_COPY='+json.dumps({c:{k:v[i] for k,v in COPY.items()} for i,(c,_) in enumerate(LANGUAGES)},ensure_ascii=False,separators=(',',':'))+';\n')
 (DIST/'CNAME').write_text('playkintsugi.com\n')
 (DIST/'.nojekyll').touch()
 (DIST/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://playkintsugi.com/sitemap.xml\n')
+# Authorises Google AdMob to sell the app's ad space. AdMob reads it from the domain in
+# the App Store Marketing URL; the publisher ID is the AdMob account's.
+(DIST/'app-ads.txt').write_text(APP_ADS)
 (DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join(f'<url><loc>https://playkintsugi.com{p}</loc></url>' for p in ['/','/support/','/privacy/'])+'</urlset>\n')
 print(f'Built 4 pages and {len(LANGUAGES)} languages.')
