@@ -1,6 +1,6 @@
 # 金継 KINTSUGI — official website
 
-The independent, public marketing website for Sunimori's Kintsugi game. Production domain: https://playkintsugi.com/. The game is in development; no release date or App Store download link is claimed.
+The independent, public marketing website for Sunimori's Kintsugi game. Production domain: https://playkintsugi.com/. The game is on the App Store since 2026-09-26: https://apps.apple.com/app/id6811162450 (`STORE_URL` in `content.py`).
 
 ## Website languages
 
@@ -32,9 +32,9 @@ The private **sunimori/kintsugi** game repository is separate. Merging its work 
 
 GitHub Pages custom domain: `playkintsugi.com`. DNS stays at Squarespace: apex A records `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; `www` CNAME `sunimori.github.io`. Preserve email, verification and domain-connect records. Domain binding and HTTPS enforcement live in the repository Pages settings; an Actions deployment does not configure them through the `CNAME` file alone.
 
-## Release checklist
+## Release (2026-09-26)
 
-When the app is actually available, verify its public App Store URL, update the release wording in all 11 languages, then add the download link. Update the Kintsugi card in `sunimori/sunimori-site` at the same time. No download button should be added for an unlisted app.
+Done when the app went live: release wording in all 11 languages (description, navigation, hero note, release section, screenshot note, support FAQ); App Store links in the hero note, the release button and the download FAQ, all to `STORE_URL`, which opens each visitor's own storefront; the devices FAQ says iPhone with iOS 17 or later. `check.py` requires those three links and refuses any other App Store URL. The Kintsugi card in `sunimori/sunimori-site` switched to available now the same day.
 
 The privacy policy describes the production build as submitted (2026-09-17): local-only game data, Game Center, and player-initiated rewarded ads from Google AdMob with Google's consent message, all-ages ad content and in-app ad reporting. Revise it in all 11 languages whenever the app's data practices change.
 

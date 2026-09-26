@@ -19,3 +19,6 @@ html:lang(ru) .panel-text h3{font-size:27px}
 
 /* Long translated policy titles must wrap even on the smallest phones. */
 .legal h1{overflow-wrap:anywhere;hyphens:auto}.footer-links{flex-wrap:wrap}
+
+/* Released 2026-09-26: the hero note links the App Store, and the release section has its button. */
+a.coming{text-decoration:underline;text-decoration-color:#b6b2a455;text-underline-offset:5px;transition:color .25s}a.coming:hover{color:#e1c999}a.coming>span:last-child{margin-left:6px}.release-actions{margin:0 0 30px}

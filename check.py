@@ -3,7 +3,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import re
-from content import COPY, LANGUAGES, APP_ADS
+from content import COPY, LANGUAGES, APP_ADS, STORE_URL
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT/'dist'
@@ -15,7 +15,7 @@ assert all(len(values)==11 and all(v.strip() for v in values) for values in COPY
 
 class Page(HTMLParser):
     def __init__(self,path):
-        super().__init__(); self.path=path; self.refs=[]; self.ids=set(); self.langs=[]; self.h1=0
+        super().__init__(); self.path=path; self.refs=[]; self.ids=set(); self.langs=[]; self.h1=0; self.store=0
     def handle_starttag(self,tag,attrs):
         a=dict(attrs)
         if a.get('id'): self.ids.add(a['id'])
@@ -27,7 +27,9 @@ class Page(HTMLParser):
         for attr in ['href','src']:
             if a.get(attr): self.refs.append((tag,a[attr]))
         if tag=='script' and not a.get('src'): issues.append(f'{self.path}: inline script')
-        if tag=='a' and 'apps.apple.com' in a.get('href',''): issues.append(f'{self.path}: premature store link')
+        if tag=='a' and 'apps.apple.com' in a.get('href',''):
+            self.store+=1
+            if a['href']!=STORE_URL: issues.append(f'{self.path}: store link is not the App Store page')
 
 pages={}
 for file in DIST.rglob('*'):
@@ -52,7 +54,10 @@ for file in ROOT.rglob('*'):
     if file.suffix not in ['.py','.md','.yml','.js','.css','.html','.json','.txt','.svg','.xml']: continue
     text=file.read_text()
     if any(re.search(p,text) for p in patterns): issues.append(f'Credential pattern found: {file}')
+# Released 2026-09-26: the home page (hero and release section) and the support FAQ link the store.
+for route, count in [('index.html', 2), ('support/index.html', 1)]:
+    if pages[DIST/route].store!=count: issues.append(f'{route}: expected {count} App Store link(s)')
 assert (DIST/'CNAME').read_text().strip()=='playkintsugi.com'
 assert (DIST/'app-ads.txt').read_text()==APP_ADS, 'app-ads.txt must match the AdMob publisher line'
 assert not issues, '\n'.join(issues)
-print(f'Passed: {len(pages)} pages, 11 complete languages, local links, assets, prelaunch state and public-file scan.')
+print(f'Passed: {len(pages)} pages, 11 complete languages, local links, assets, App Store links and public-file scan.')
