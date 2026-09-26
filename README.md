@@ -36,7 +36,7 @@ GitHub Pages custom domain: `playkintsugi.com`. DNS stays at Squarespace: apex A
 
 Done when the app went live: release wording in all 11 languages (description, navigation, hero note, release section, screenshot note, support FAQ); App Store links in the hero note, the release button and the download FAQ, all to `STORE_URL`, which opens each visitor's own storefront; the devices FAQ says iPhone with iOS 17 or later. `check.py` requires those three links and refuses any other App Store URL. The Kintsugi card in `sunimori/sunimori-site` switched to available now the same day.
 
-The privacy policy describes the production build as submitted (2026-09-17): local-only game data, Game Center, and player-initiated rewarded ads from Google AdMob with Google's consent message, all-ages ad content and in-app ad reporting. Revise it in all 11 languages whenever the app's data practices change.
+The privacy policy describes the released game (updated 2026-09-26): local-only game data, with no play logs or diagnostics in release builds; Game Center scores and rank achievements (on by default, can be turned off in Settings); and player-initiated rewarded ads from Google AdMob with Google's consent message where required, the US-states opt-out in the same Settings entry, all-ages ad content and in-app ad reporting. Revise it in all 11 languages whenever the app's data practices change.
 
 `dist/app-ads.txt` authorises Google AdMob to sell the app's ad space. AdMob reads it from the domain in the App Store Marketing URL, so that URL must stay `https://playkintsugi.com/`. The publisher line lives in `content.py` (`APP_ADS`) and `check.py` verifies the built file.
 
